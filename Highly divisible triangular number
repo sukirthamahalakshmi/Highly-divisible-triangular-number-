@@ -1,0 +1,44 @@
+public class HighlyDivisibleTriangularNumber {
+
+    public static void main(String[] args) {
+        int divisorsTarget = 500;
+        long n = 1;
+        long triangularNumber = 0;
+
+        while (true) {
+            triangularNumber = calculateTriangularNumber(n);
+            int numOfDivisors = countDivisors(triangularNumber);
+
+            if (numOfDivisors > divisorsTarget) {
+                break;
+            }
+            n++;
+        }
+
+        System.out.println("The first triangular number with over " + divisorsTarget + " divisors is: " + triangularNumber);
+    }
+
+    // Calculate the n-th triangular number
+    private static long calculateTriangularNumber(long n) {
+        return n * (n + 1) / 2;
+    }
+
+    // Count the number of divisors of a given number
+    private static int countDivisors(long number) {
+        int divisors = 0;
+        long sqrt = (long) Math.sqrt(number);
+
+        for (long i = 1; i <= sqrt; i++) {
+            if (number % i == 0) {
+                divisors += 2; // i and number/i
+            }
+        }
+
+        // If the number is a perfect square, we counted the sqrt twice, so decrement by 1
+        if (sqrt * sqrt == number) {
+            divisors--;
+        }
+
+        return divisors;
+    }
+}
